@@ -1066,85 +1066,6 @@ https://chat.whatsapp.com/${response}`
                                                         replygcxeon(`Error`)}}
                                                         break
 
-
-
-            case 'ping': case 'botstatus': case 'statusbot': case 'p': {
-	const used = process.memoryUsage()
-                const cpus = os.cpus().map(cpu => {
-                    cpu.total = Object.keys(cpu.times).reduce((last, type) => last + cpu.times[type], 0)
-			        return cpu
-                })
-                const cpu = cpus.reduce((last, cpu, _, { length }) => {
-                    last.total += cpu.total
-                    last.speed += cpu.speed / length
-                    last.times.user += cpu.times.user
-                    last.times.nice += cpu.times.nice
-                    last.times.sys += cpu.times.sys
-                    last.times.idle += cpu.times.idle
-                    last.times.irq += cpu.times.irq
-                    return last
-                }, {
-                    speed: 0,
-                    total: 0,
-                    times: {
-			            user: 0,
-			            nice: 0,
-			            sys: 0,
-			            idle: 0,
-			            irq: 0
-                }
-                })
-                let timestamp = speed()
-                let latensi = speed() - timestamp
-                neww = performance.now()
-                oldd = performance.now()
-                respon = `
-Response Speed ${latensi.toFixed(4)} _Second_ \n ${oldd - neww} _miliseconds_\n\nRuntime : ${runtime(process.uptime())}
-
-💻 Info Server
-RAM: ${formatp(os.totalmem() - os.freemem())} / ${formatp(os.totalmem())}
-
-_NodeJS Memory Usaage_
-${Object.keys(used).map((key, _, arr) => `${key.padEnd(Math.max(...arr.map(v=>v.length)),' ')}: ${formatp(used[key])}`).join('\n')}
-
-${cpus[0] ? `_Total CPU Usage_
-${cpus[0].model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}
-_CPU Core(s) Usage (${cpus.length} Core CPU)_
-${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}`).join('\n\n')}` : ''}
-                `.trim()
-	XeonBotInc.relayMessage(m.chat,  {
-        requestPaymentMessage: {
-          currencyCodeIso4217: 'INR',
-          amount1000: 999999999,
-          requestFrom: m.sender,
-          noteMessage: {
-          extendedTextMessage: {
-          text: respon,
-          contextInfo: {
-          externalAdReply: {
-          showAdAttribution: true
-          }}}}}}, {})
-    }
-	
-	break
-
- case 'listonline': {
-   if (!isGroup) return onlyGroup()
-   let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : from
-   let online = [...Object.keys(store.presences[id]), botNumber]
-   let i = 0
-   while (i < online.length){
-     for (let jid of online.slice(i)){
-        XeonBotInc.sendMessage(m.chat, {text: `@${jid.split`@`[0]}`, mentions: [jid]});
-     };
-   i++
-   }
-}
-break
-
-
-
-
                                                         case 'spamvit': {
                                                         if (!XeonTheCreator) return XeonStickOwner()
                                                         await loading()
@@ -1155,7 +1076,6 @@ break
                                                         let cret = await XeonBotInc.groupCreate("𝐀𝐍𝐎𝐍𝐘𝐌𝐎𝐔𝐒", [])
                                                         await XeonBotInc.groupParticipantsUpdate(cret.id, [victim], 'add')
                                                         let response = await XeonBotInc.groupInviteCode(cret.id)
-
                                                         const teksop = `     「 Create Group 」
 ▸ Name : ${cret.subject}
 ▸ Owner : @${cret.owner.split("@")[0]}
@@ -1167,15 +1087,24 @@ https://chat.whatsapp.com/${response}`
                                                         break
 
 
-
-
-
-
-
-
-
-
-
+                                                        case 'tagall':
+                                                        case 'absen':
+                                                        case'croot':
+                                                        let me = m.sender
+                                                        let bb = 0
+                                                        let teks = `• *ᴛᴀɴɢɢᴀʟ* : ${tggl(new Date)}
+• *ᴊᴀᴍ* : ${barat } WIB
+• *ᴜsᴇʀ* :  
+  ╰≻ *• 𝑵𝒂𝒎𝒆 :* @${me.split('@')[0]}
+_________________________
+> 𝐀𝐁𝐒𝐄𝐍 𝐌𝐄𝐌𝐁𝐄𝐑 𝐆𝐑𝐎𝐔𝐏
+╭───────────────` + `\n`
+                                                        for (let mem of participants) {
+                                                        teks += `│${bb}• @${mem.id.split('@')[0]}\n`
+                                                        }
+                                                        teks += `╰───────────────`
+                                                        XeonBotInc.sendMessage(m.chat, {text: teks, mentions: participants.map(a => a.id)}, {quoted:berlhyn})
+                                                        break
 
 
 
@@ -1185,37 +1114,6 @@ https://chat.whatsapp.com/${response}`
 
 
             
-
-            case 'getmsg': {
-                if (!text) return replygcxeon(`Example : ${prefix + command} file name\n\nView list of messages with ${prefix}listmsg`)
-                let msgs = global.db.data.database
-                if (!(text.toLowerCase() in msgs)) return replygcxeon(`'${text}' not listed in the message list`)
-                XeonBotInc.copyNForward(m.chat, msgs[text.toLowerCase()], true)
-            }
-            break
-
-
-
-
-            case 'antiviewonce':{
-		         if (!m.isGroup) return XeonStickGroup()
-if (!isBotAdmins) return XeonStickBotAdmin()
-if (!isAdmins && !XeonTheCreator) return XeonStickAdmin()
-               if (args.length < 1) return replygcxeon('on/off?')
-               if (args[0] === 'on') {
-                  db.data.chats[from].antiviewonce = true
-                  replygcxeon(`${command} is enabled`)
-               } else if (args[0] === 'off') {
-                  db.data.chats[from].antiviewonce = false
-                  replygcxeon(`${command} is disabled`)
-               }
-               }
-            break
-
-
-
-
-
 
 
 
