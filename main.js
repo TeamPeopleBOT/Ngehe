@@ -16,12 +16,30 @@ const axios = require('axios')
 const _ = require('lodash')
 const moment = require('moment-timezone')
 const PhoneNumber = require('awesome-phonenumber')
+const canvacard = require("canvacard");
 const Unsend = JSON.parse(fs.readFileSync('./unsend.json'))
 const { imageToWebp, videoToWebp, writeExifImg, writeExifVid } = require('./lib/exif')
-const { smsg, isUrl, generateMessageTag, getBuffer, getSizeMedia, fetch, await, sleep, reSize } = require('./lib/myfunc')
+const { smsg, isUrl, generateMessageTag, getBuffer, getRandom, getSizeMedia, fetch, await, sleep, reSize } = require('./lib/myfunc')
 const { default: XeonBotIncConnect, makeWALegacySocket, getAggregateVotesInPollMessage, delay, PHONENUMBER_MCC, makeCacheableSignalKeyStore, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto, Browsers} = require("@whiskeysockets/baileys")
 
-
+const barat = moment.tz('Asia/Jakarta').format('HH:mm:ss')
+const tggl = (numer) => {
+              myMonths = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+        myDays = ['Minggu','Senin','Selasa','Rabu','Kamis','Jum’at','Sabtu']; 
+        var tgl = new Date(numer);
+        var day = tgl.getDate()
+        bulan = tgl.getMonth()
+        var thisDay = tgl.getDay(),
+        thisDay = myDays[thisDay];
+        var yy = tgl.getYear()
+        var year = (yy < 1000) ? yy + 1900 : yy; 
+        const time = moment.tz('Asia/Jakarta').format('DD/MM HH:mm:ss')
+        let d = new Date
+        let locale = 'id'
+        let gmt = new Date(0).getTime() - new Date('1 January 1970').getTime()
+        let weton = ['Pahing', 'Pon','Wage','Kliwon','Legi'][Math.floor(((d * 1) + gmt) / 84600000) % 5]
+        return`${thisDay}, ${day} - ${myMonths[bulan]} - ${year}`
+}
 
 //const { default: XeonBotIncConnect, getAggregateVotesInPollMessage, delay, PHONENUMBER_MCC, makeCacheableSignalKeyStore, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto, Browsers} = require("@whiskeysockets/baileys")
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -188,10 +206,20 @@ async function startXeonBotInc() {
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
     XeonBotInc.ev.on('group-participants.update', async (anu) => {
-                            if (global.welcome){
                             try {
                             let metadata = await XeonBotInc.groupMetadata(anu.id)
                             let participants = anu.participants
+                            const berlhyn = { 
+                            key: {
+                            participant: `0@s.whatsapp.net`,...(participants ? { remoteJid: "status@broadcast" } : {}) },
+                            message: { 'contactMessage': {
+                            'displayName': `𝐕 𝐓 ΞΛ𝐌 • 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋`, 
+                            'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;xeberlhyn,;;;\nFN:Xeberlhyn\nitem1.TEL;waid=6285262556649:6285262556649\nitem1.X-ABLabel:Ponsel\nEND:VCARD`,
+                            'jpegThumbnail':  thumb,
+                            thumbnail: thumb,
+                            sendEphemeral: true}}}
+                            let pushname = await XeonBotInc.getName(participants[0])
+                            let mem = anu.participants[0];
                             for (let num of participants) {
                                                         try {ppuser = await XeonBotInc.profilePictureUrl(num, 'image')}
                                                         catch (err) {ppuser = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'}
@@ -200,67 +228,83 @@ async function startXeonBotInc() {
                                                         memb = metadata.participants.length
                                                         XeonWlcm = await getBuffer(ppuser)
                                                         XeonLft = await getBuffer(ppuser)
-
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
+
+
                                                         if (anu.action == 'add') {
-                                                        const xeonbuffer = await getBuffer(ppuser)
-                                                        let xeonName = num
-                                                        const xtime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
-                                                        const xdate = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
-                                                        const xmembers = metadata.participants.length
-                                                        xeonbody = `┌─❖
-│「 𝗛𝗶 👋 」
-└┬❖ 「  @${xeonName.split("@")[0]}  」
-   │✑  𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼 
-   │✑  ${metadata.subject}
-   │✑  𝗠𝗲𝗺𝗯𝗲𝗿 : 
-   │✑ ${xmembers}th
-   │✑  𝗝𝗼𝗶𝗻𝗲𝗱 : 
-   │✑ ${xtime} ${xdate}
-   └───────────────┈ ⳹`
-                                                        XeonBotInc.sendMessage(anu.id,
-                                                         { text: xeonbody,
-                                                         contextInfo:{
-                                                         mentionedJid:[num],
-                                                         "externalAdReply": {"showAdAttribution": true,
-                                                         "containsAutoReply": true,
-                                                         "title": ` ${global.botname}`,
-                                                        "body": `${ownername}`,
-                                                         "previewType": "PHOTO",
-                                                        "thumbnailUrl": ``,
-                                                        "thumbnail": XeonWlcm,
-                                                        "sourceUrl": `${wagc}`}}})
+    let tegoda =`── ❖ ❍ 「𝐖𝐞𝐥𝐥𝐜𝐨𝐦𝐞 𝐌𝐞𝐬𝐬𝐚𝐠𝐞 」 ❍ ❖ ──
+  • *_ᴛᴀɴɢɢᴀʟ_* : ${tggl(new Date)}
+  • *_ᴊᴀᴍ_* :  ${barat } WIB
+  • *_ᴜsᴇʀ_* :
+  ╰≻ • *𝑵𝒂𝒎𝒆* : @${num.split("@")[0]}
+  🌹╭────────────────────🌷
+  > Selamat Bergabung di Group
+  > *_${metadata.subject}_*
+  > Semoga betah dan makin akrab ya. 😊😊
+  🌹╰────────────────────🌷
+
+  _*𝑪𝒐𝒑𝒚𝒓𝒊𝒈𝒉𝒕 • 𝟐𝟎𝟐𝟒*_`
+    const background = "https://i.ibb.co/2NbmrX0/20240303-222837.png";
+    let image3 = new canvacard.Welcomer()
+           .setAvatar(ppuser)
+           .setBackground('IMAGE', background)
+           .setTitulo(`${pushname}`)
+           .setTypeOverlay("ROUNDED")
+           .setSubtitulo("Selamat datang jangan lupa untuk terus bernapas.")
+           .setColor("border", "#A6A6A6CC")
+           .setColorTitulo("#FFFFFF")
+           .setColorSubtitulo("#FF0000")
+           .setColorCircle("#A6A6A6CC")
+           .setColorOverlay("#A6A6A600")
+           .setOpacityOverlay("0.4")
+           let pante = await getRandom(".png")
+           image3.build()
+           .then(async data => {
+           await canvacard.write(data,pante);
+           let bujang = await fs.readFileSync(pante)
+           XeonBotInc.sendMessage(anu.id, { caption: tegoda, mentions:[num], image: bujang},
+           {quoted:berlhyn})
+           await fs.unlinkSync(pante)
+            })
+           
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
                                                         } else if (anu.action == 'remove') {
-                                                        const xeonbuffer = await getBuffer(ppuser)
-                                                        const xeontime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
-                                                        const xeondate = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
-                                                        let xeonName = num
-                                                        const xeonmembers = metadata.participants.length
-                                                        xeonbody = `┌─❖
-│「 𝗚𝗼𝗼𝗱𝗯𝘆𝗲 👋 」
-└┬❖ 「 @${xeonName.split("@")[0]}  」
-   │✑  𝗟𝗲𝗳𝘁 
-   │✑ ${metadata.subject}
-   │✑  𝗠𝗲𝗺𝗯𝗲𝗿 : 
-   │✑ ${xeonmembers}th
-   │✑  𝗧𝗶𝗺𝗲 : 
-   │✑  ${xeontime} ${xeondate}
-   └───────────────┈ ⳹`
-                                                        XeonBotInc.sendMessage(anu.id,
-                                                         { text: xeonbody,
-                                                         contextInfo:{
-                                                         mentionedJid:[num],
-                                                         "externalAdReply": {"showAdAttribution": true,
-                                                         "containsAutoReply": true,
-                                                         "title": ` ${global.botname}`,
-                                                        "body": `${ownername}`,
-                                                         "previewType": "PHOTO",
-                                                        "thumbnailUrl": ``,
-                                                        "thumbnail": XeonLft,
-                                                        "sourceUrl": `${wagc}`}}})
-                                                        }
-                            }} catch (err) {console.log(err)}}
+     //    if (!wlcm.includes(anu.id)) return
+    let tegoda =`── ❖ ❍ 「𝐋𝐞𝐚𝐯𝐞 𝐌𝐞𝐬𝐬𝐚𝐠𝐞」 ❍ ❖ ──
+  • *_ᴛᴀɴɢɢᴀʟ_* : ${tggl(new Date)}
+  • *_ᴊᴀᴍ_* :  ${barat } WIB
+  • *_ᴜsᴇʀ_* :
+  ╰≻ • *𝑵𝒂𝒎𝒆* : @${num.split("@")[0]}
+  🌻╭──────────────────────🍂
+  >  Selamat jalan dari Group
+  >  *_${metadata.subject}_*
+  >  semoga tenang selalu disisinya.  🌺🌺🌺
+  🌻╰──────────────────────🍂
+
+  _*𝑪𝒐𝒑𝒚𝒓𝒊𝒈𝒉𝒕 • 𝟐𝟎𝟐𝟒*_`
+    const background = "https://i.ibb.co/pRLQDYF/20240304-075820.png";
+    let image3 = new canvacard.Welcomer()
+           .setAvatar(ppuser)
+           .setBackground('IMAGE', background)
+           .setTitulo(`${pushname}`)
+           .setTypeOverlay("ROUNDED")
+           .setSubtitulo("Selamat jalan kawan,smoga kau tenang disana.")
+           .setColor("border", "#A6A6A6CC")
+           .setColorTitulo("#FFFFFF")
+           .setColorSubtitulo("#FFFF00")
+           .setColorCircle("#A6A6A6CC")
+           .setColorOverlay("#A6A6A600")
+           .setOpacityOverlay("0.4")
+           let pante = await getRandom(".png")
+           image3.build()
+           .then(async data => {
+           await canvacard.write(data,pante);
+           let bujang = await fs.readFileSync(pante)
+           XeonBotInc.sendMessage(anu.id, { caption: tegoda, mentions:[num], image: bujang},
+                                  {quoted:berlhyn})
+           await fs.unlinkSync(pante)
+            })
+                            }}} catch (err) {console.log(err)}
     })
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
@@ -284,10 +328,6 @@ async function startXeonBotInc() {
                 await XeonBotInc.readMessages([mek.key]) }
                             }
     })
-
-
-
-    
 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
