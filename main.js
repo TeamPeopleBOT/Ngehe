@@ -238,9 +238,9 @@ async function startXeonBotInc() {
   • *_ᴜsᴇʀ_* :
   ╰≻ • *𝑵𝒂𝒎𝒆* : @${num.split("@")[0]}
   🌹╭────────────────────🌷
-  > Selamat Bergabung di Group
-  > *_${metadata.subject}_*
-  > Semoga betah dan makin akrab ya. 😊😊
+> Selamat Bergabung di Group
+> *_${metadata.subject}_*
+> Semoga betah dan makin akrab ya. 😊😊
   🌹╰────────────────────🌷
 
   _*𝑪𝒐𝒑𝒚𝒓𝒊𝒈𝒉𝒕 • 𝟐𝟎𝟐𝟒*_`
@@ -276,9 +276,9 @@ async function startXeonBotInc() {
   • *_ᴜsᴇʀ_* :
   ╰≻ • *𝑵𝒂𝒎𝒆* : @${num.split("@")[0]}
   🌻╭──────────────────────🍂
-  >  Selamat jalan dari Group
-  >  *_${metadata.subject}_*
-  >  semoga tenang selalu disisinya.  🌺🌺🌺
+>  Selamat jalan dari Group
+>  *_${metadata.subject}_*
+>  semoga tenang selalu disisinya.  🌺🌺🌺
   🌻╰──────────────────────🍂
 
   _*𝑪𝒐𝒑𝒚𝒓𝒊𝒈𝒉𝒕 • 𝟐𝟎𝟐𝟒*_`
