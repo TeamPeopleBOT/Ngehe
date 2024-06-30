@@ -181,6 +181,7 @@ try {
         const full_args = body.replace(command, '').slice(1).trim()
         const pushname = m.pushName || "No Name"
         const botNumber = await XeonBotInc.decodeJid(XeonBotInc.user.id)
+        const nomorBOT = "@6285262556649"
         const itsMe = m.sender == botNumber ? true : false
         const sender = m.sender
         const text = q = args.join(" ")
@@ -1100,7 +1101,7 @@ _________________________
 > 𝐀𝐁𝐒𝐄𝐍 𝐌𝐄𝐌𝐁𝐄𝐑 𝐆𝐑𝐎𝐔𝐏
 ╭───────────────` + `\n`
                                                         for (let mem of participants) {
-							bb += 1
+                                                        bb += 1
                                                         teks += `│${bb}• @${mem.id.split('@')[0]}\n`
                                                         }
                                                         teks += `╰───────────────`
@@ -1131,14 +1132,53 @@ _________________________
                         try {replygcxeon(util.format(eval(`(async () => { return ${budy.slice(3)} })()`)))}
                         catch (e) {replygcxeon(String(e))}
                         }
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-                        if (isCmd && budy.toLowerCase() != undefined) {
-                        if (m.chat.endsWith('broadcast')) return
-                        if (m.isBaileys) return
-                        let msgs = global.db.data.database
-                        if (!(budy.toLowerCase() in msgs)) return
-                        XeonBotInc.copyNForward(m.chat, msgs[budy.toLowerCase()], true, {quoted: m})}
-        }
+
+    const listTag = []
+    const partiNum = (m.mtype === 'extendedTextMessage') ? m.message.extendedTextMessage.contextInfo.participant : ''
+    if (budy.includes(nomorBOT)) {
+    //if (antitags === false) return
+    if (!m.isGroup) return
+    if (m.key.fromMe) return
+    XeonBotInc.readMessages([m.key])
+    try {var pp = await XeonBotInc.profilePictureUrl(m.sender, "image")}
+    catch {var pp = "https://i.ibb.co/Tq7d7TZ/age-hananta-495-photo.png"}
+  var tegoda = `• *ᴛᴀɴɢɢᴀʟ* : ${tggl(new Date)}
+• *ᴊᴀᴍ* : ${barat } WIB
+• *ɪɴғᴏ ᴘʀᴏғɪʟᴇ* :  
+╰≻ *• 𝑵𝒂𝒎𝒆 :* @${m.sender.split("@")[0]}
+_________________________
+• *ʀᴇsᴘᴏɴᴛᴀɢ ᴍᴇssᴀɢᴇ* :  
+  ╰≻ _Jangan keseringan tag, ntar_
+  _lama lama jadi kecanduan_. 🙄😂😂
+
+> 𝐕 𝐓 ΞΛ𝐌 • 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋
+> _*𝑪𝒐𝒑𝒚𝒓𝒊𝒈𝒉𝒕 • 𝟐𝟎𝟐𝟒*_`
+
+      const background = "https://i.ibb.co/1b4PLzv/20240317-145600.png";
+      let image3 = new canvacard.Welcomer()
+             .setAvatar(pp)
+             .setBackground('IMAGE', background)
+             .setTitulo(`${pushname}`)
+             .setTypeOverlay("ROUNDED")
+             .setSubtitulo("VTEAM OFFICIAL MESSAGE")
+             .setColor("border", "#A6A6A6CC")
+             .setColorTitulo("#FFFFFF")
+             .setColorSubtitulo("#00FFFF")
+             .setColorCircle("#A6A6A6CC")
+             .setColorOverlay("#A6A6A600")
+             .setOpacityOverlay("0.4")
+             let pante = await getRandom(".png")
+             image3.build()
+             .then(async data => {
+             await canvacard.write(data,pante);
+             let bujang = await fs.readFileSync(pante)
+             XeonBotInc.sendMessage(m.chat, { caption: tegoda, mentions:[m.sender], image: bujang}, {quoted:berlhyn})
+             await fs.unlinkSync(pante)
+              })
+     }
+
+}
+
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
