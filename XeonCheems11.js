@@ -181,7 +181,7 @@ try {
         const full_args = body.replace(command, '').slice(1).trim()
         const pushname = m.pushName || "No Name"
         const botNumber = await XeonBotInc.decodeJid(XeonBotInc.user.id)
-        const nomorBOT = "@6285262556649"
+        const nomorBOT = "@6282268407522"
         const itsMe = m.sender == botNumber ? true : false
         const sender = m.sender
         const text = q = args.join(" ")
