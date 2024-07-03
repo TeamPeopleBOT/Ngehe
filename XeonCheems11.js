@@ -655,30 +655,6 @@ if (m.message.protocolMessage) {
             } catch (e) {reject(e)}})
         }
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        async function styletext(teks) {
-            return new Promise((resolve, reject) => {
-            axios.get('http://qaz.wtf/u/convert.cgi?text='+teks)
-            .then(({ data }) => {
-            let $ = cheerio.load(data)
-            let hasil = []
-            $('table > tbody > tr').each(function (a, b) {hasil.push({ name: $(b).find('td:nth-child(1) > span').text(), result: $(b).find('td:nth-child(2)').text().trim() })})
-            resolve(hasil)
-            })})
-        }
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        async function Telesticker(url) {
-            return new Promise(async (resolve, reject) => {
-            if (!url.match(/(https:\/\/t.me\/addstickers\/)/gi)) return replygcxeon('Enther your url telegram sticker link')
-            packName = url.replace("https://t.me/addstickers/", "")
-            data = await axios(`https://api.telegram.org/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/getStickerSet?name=${encodeURIComponent(packName)}`, {method: "GET",headers: {"User-Agent": "GoogleBot"}})
-            const xeonyresult = []
-            for (let i = 0; i < data.data.result.stickers.length; i++) {
-                        fileId = data.data.result.stickers[i].thumb.file_id
-                        data2 = await axios(`https://api.telegram.org/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/getFile?file_id=${fileId}`)
-                        result = {status: 200, author: 'DGXeon', url: "https://api.telegram.org/file/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/" + data2.data.result.file_path}
-                        xeonyresult.push(result)
-            }resolve(xeonyresult)})
-        }
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
         async function useLimit(senuseLimitder, amount) {
             db.data.users[sender].limit -= amount
@@ -759,16 +735,7 @@ if (m.message.protocolMessage) {
          console.log(chalk.black(chalk.bgWhite(!isCommand ? '[ MESSAGE ]' : '[ COMMAND ]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('=> From'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=> In'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
          global.db.data.settings[botNumber].totalhit += 1
         }
- //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        //antiviewonce
-        if ( db.data.chats[m.chat].antiviewonce && m.isGroup && m.mtype == 'viewOnceMessageV2') {
-         let val = { ...m }
-        let msg = val.message?.viewOnceMessage?.message || val.message?.viewOnceMessageV2?.message
-        delete msg[Object.keys(msg)[0]].viewOnce
-        val.message = msg
-        await XeonBotInc.sendMessage(m.chat, { forward: val }, { quoted: m })
-        }
+
  //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
         if (isGroup && db.data.chats[m.chat].antivirtex) {
@@ -792,76 +759,6 @@ if (m.message.protocolMessage) {
         return await XeonBotInc.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
         }}}
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        if (db.data.chats[m.chat].antimedia && isMedia) {
-        if (XeonTheCreator || isAdmins || !isBotAdmins){}
-        else {
-        replygcxeon(`\`\`\`「 Media Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-media for this group`)
-        return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        if (db.data.chats[m.chat].image && isXeonMedia) {
-        if(isXeonMedia === "imageMessage"){
-        if (XeonTheCreator || isAdmins || !isBotAdmins){}
-        else {
-        replygcxeon(`\`\`\`「 Image Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-image for this group`)
-        return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        if (db.data.chats[m.chat].antivideo && isXeonMedia) {
-        if(isXeonMedia === "videoMessage"){
-        if (XeonTheCreator || isAdmins || !isBotAdmins){}
-        else {
-        replygcxeon(`\`\`\`「 Video Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-video for this group`)
-        return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        if (db.data.chats[m.chat].antisticker && isXeonMedia) {
-        if(isXeonMedia === "stickerMessage"){
-        if (XeonTheCreator || isAdmins || !isBotAdmins){}
-        else {
-        replygcxeon(`\`\`\`「 Sticker Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-sticker for this group`)
-        return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        if (db.data.chats[m.chat].antiaudio && isXeonMedia) {
-        if(isXeonMedia === "audioMessage"){
-        if (XeonTheCreator || isAdmins || !isBotAdmins){}
-        else {
-        replygcxeon(`\`\`\`「 Audio Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-audio for this group`)
-        return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-       if (db.data.chats[m.chat].antipoll && isXeonMedia) {
-       if(isXeonMedia === "pollCreationMessage"){
-       if (XeonTheCreator || isAdmins || !isBotAdmins){}
-       else {
-       replygcxeon(`\`\`\`「 Poll Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-poll for this group`)
-       return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-       if (db.data.chats[m.chat].antilocation && isXeonMedia) {
-       if(isXeonMedia === "locationMessage"){
-       if (XeonTheCreator || isAdmins || !isBotAdmins){}
-       else {
-       replygcxeon(`\`\`\`「 Location Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-location for this group`)
-       return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-       if (db.data.chats[m.chat].antidocument && isXeonMedia) {
-       if(isXeonMedia === "documentMessage"){
-       if (XeonTheCreator || isAdmins || !isBotAdmins){}
-       else {
-       replygcxeon(`\`\`\`「 Document Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-document for this group`)
-       return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-       if (db.data.chats[m.chat].anticontact && isXeonMedia) {
-       if(isXeonMedia === "contactMessage"){
-       if (XeonTheCreator || isAdmins || !isBotAdmins){}
-       else {
-       replygcxeon(`\`\`\`「 Contact Detected 」\`\`\`\n\nSorry, but I have to delete it, because the admin/owner has activated anti-contact for this group`)
-       return XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant }})
-        }}}
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
        if (db.data.chats[m.chat].badword) {
        for (let bak of bad) {
@@ -888,63 +785,7 @@ if (m.message.protocolMessage) {
        XeonBotInc.sendVideoAsSticker(from, mediac, m, { packname: global.packname, author: global.author })
        }}
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        if (db.data.chats[m.chat].antilinkgc) {
-        if (budy.match(`chat.whatsapp.com`)) {
-        bvl = `\`\`\`「 GC Link Detected 」\`\`\`\n\nAdmin has sent a gc link, admin is free to send any link😇`
-        if (isAdmins) return replygcxeon(bvl)
-        if (m.key.fromMe) return replygcxeon(bvl)
-        if (XeonTheCreator) return replygcxeon(bvl)
-        await XeonBotInc.sendMessage(m.chat,{
-        delete: {
-        remoteJid: m.chat,
-        fromMe: false,
-        id: m.key.id,
-        participant: m.key.participant
-        }})
-        XeonBotInc.sendMessage(from, {text:`\`\`\`「 GC Link Detected 」\`\`\`\n\n@${m.sender.split("@")[0]} has sent a link and successfully deleted`, contextInfo:{mentionedJid:[m.sender]}}, {quoted:m})
-        }}
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-        if (db.data.chats[m.chat].antilink) {
-        if (budy.match('http') && budy.match('https')) {
-        bvl = `\`\`\`「 Link Detected 」\`\`\`\n\nAdmin has sent a link, admin is free to send any link😇`
-        if (isAdmins) return replygcxeon(bvl)
-        if (m.key.fromMe) return replygcxeon(bvl)
-        if (XeonTheCreator) return replygcxeon(bvl)
-        await XeonBotInc.sendMessage(m.chat,{
-        delete: {
-        remoteJid: m.chat,
-        fromMe: false,
-        id: m.key.id,
-        participant: m.key.participant
-        }})
-        XeonBotInc.sendMessage(from, {text:`\`\`\`「 Link Detected 」\`\`\`\n\n@${m.sender.split("@")[0]} has sent a link and successfully deleted`, contextInfo:{mentionedJid:[m.sender]}}, {quoted:m})
-        }}
-//▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
-
-
-//console.log(XeonBotInc)
-
-
-  
-   //if (args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : from){
- //  if (isGroup){
-
-  
-   //let online = [...Object.keys(store.presences[m.chat]).botNumber]
-  // let i = 0
-   //do {console.log(online[i]);
-    //  i++;
-   // }while (i < online.length){
-     //for (let jid of online.slice(i)){
-       // XeonBotInc.sendMessage(m.chat, {text: `@${jid.split`@`[0]}`, mentions: [jid]});
-   //  };
- //  i++
- //  }
-  // }
-   
-
-
-
 
 
 
@@ -1122,27 +963,12 @@ _________________________
   //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
         default:
-                        if (budy.startsWith('=>')) {
-                        if (!XeonTheCreator) return XeonStickOwner()
-                        function Return(sul) {
-                        sat = JSON.stringify(sul, null, 2)
-                        bang = util.format(sat)
-                        if (sat == undefined) {bang = util.format(sul)}
-                        return replygcxeon(bang)}
-                        try {replygcxeon(util.format(eval(`(async () => { return ${budy.slice(3)} })()`)))}
-                        catch (e) {replygcxeon(String(e))}
-                        }
-
-    const listTag = []
-    const partiNum = (m.mtype === 'extendedTextMessage') ? m.message.extendedTextMessage.contextInfo.participant : ''
-    if (budy.includes(nomorBOT)) {
-    //if (antitags === false) return
-    if (!m.isGroup) return
-    if (m.key.fromMe) return
-    XeonBotInc.readMessages([m.key])
-    try {var pp = await XeonBotInc.profilePictureUrl(m.sender, "image")}
-    catch {var pp = "https://i.ibb.co/Tq7d7TZ/age-hananta-495-photo.png"}
-  var tegoda = `• *ᴛᴀɴɢɢᴀʟ* : ${tggl(new Date)}
+                        if (budy.includes(fromMe)) {
+                        if (!m.isGroup) return
+                        if (m.key.fromMe) return
+                        try {var pp = await XeonBotInc.profilePictureUrl(m.sender, "image")}
+                        catch {var pp = "https://i.ibb.co/Tq7d7TZ/age-hananta-495-photo.png"}
+                        var tegoda = `• *ᴛᴀɴɢɢᴀʟ* : ${tggl(new Date)}
 • *ᴊᴀᴍ* : ${barat } WIB
 • *ɪɴғᴏ ᴘʀᴏғɪʟᴇ* :  
 ╰≻ *• 𝑵𝒂𝒎𝒆 :* @${m.sender.split("@")[0]}
@@ -1153,29 +979,27 @@ _________________________
 
 > 𝐕 𝐓 ΞΛ𝐌 • 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋
 > _*𝑪𝒐𝒑𝒚𝒓𝒊𝒈𝒉𝒕 • 𝟐𝟎𝟐𝟒*_`
-
-      const background = "https://i.ibb.co/1b4PLzv/20240317-145600.png";
-      let image3 = new canvacard.Welcomer()
-             .setAvatar(pp)
-             .setBackground('IMAGE', background)
-             .setTitulo(`${pushname}`)
-             .setTypeOverlay("ROUNDED")
-             .setSubtitulo("VTEAM OFFICIAL MESSAGE")
-             .setColor("border", "#A6A6A6CC")
-             .setColorTitulo("#FFFFFF")
-             .setColorSubtitulo("#00FFFF")
-             .setColorCircle("#A6A6A6CC")
-             .setColorOverlay("#A6A6A600")
-             .setOpacityOverlay("0.4")
-             let pante = await getRandom(".png")
-             image3.build()
-             .then(async data => {
-             await canvacard.write(data,pante);
-             let bujang = await fs.readFileSync(pante)
-             XeonBotInc.sendMessage(m.chat, { caption: tegoda, mentions:[m.sender], image: bujang}, {quoted:berlhyn})
-             await fs.unlinkSync(pante)
-              })
-     }
+                        const background = "https://i.ibb.co/1b4PLzv/20240317-145600.png";
+                        let image3 = new canvacard.Welcomer()
+                        .setAvatar(pp)
+                        .setBackground('IMAGE', background)
+                        .setTitulo(`${pushname}`)
+                        .setTypeOverlay("ROUNDED")
+                        .setSubtitulo("VTEAM OFFICIAL MESSAGE")
+                        .setColor("border", "#A6A6A6CC")
+                        .setColorTitulo("#FFFFFF")
+                        .setColorSubtitulo("#00FFFF")
+                        .setColorCircle("#A6A6A6CC")
+                        .setColorOverlay("#A6A6A600")
+                        .setOpacityOverlay("0.4")
+                        let pante = await getRandom(".png")
+                        image3.build()
+                        .then(async data => {
+                        await canvacard.write(data,pante);
+                        let bujang = await fs.readFileSync(pante)
+                        XeonBotInc.sendMessage(m.chat, { caption: tegoda, mentions:[m.sender], image: bujang}, {quoted:berlhyn})
+                        await fs.unlinkSync(pante)
+                        })}
 
 }
 
