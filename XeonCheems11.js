@@ -963,7 +963,7 @@ _________________________
   //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱
         default:
-                        if (budy.includes(fromMe)) {
+                        if (budy.includes(nomorBOT)) {
                         if (!m.isGroup) return
                         if (m.key.fromMe) return
                         try {var pp = await XeonBotInc.profilePictureUrl(m.sender, "image")}
